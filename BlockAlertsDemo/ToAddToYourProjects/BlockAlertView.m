@@ -104,7 +104,7 @@ static UIFont *buttonFont = nil;
         [_view addSubview:labelView];
         [labelView release];
         
-        _height += size.height + kAlertViewBorderVertical;
+        _height += size.height + kAlertViewMessageBottomMargin;
     }
 }
 
@@ -127,10 +127,10 @@ static UIFont *buttonFont = nil;
     
     _view.frame = frame;
     
-    _height = kAlertViewBorderVertical + 15;
+    _height = kAlertViewBorderVertical + kAlertViewTopMargin;
     
     if (NeedsLandscapePhoneTweaks) {
-        _height -= 15; // landscape phones need to trimmed a bit
+        _height -= kAlertViewTopMargin; // landscape phones need to trimmed a bit
     }
 
     [self addComponents:frame];
