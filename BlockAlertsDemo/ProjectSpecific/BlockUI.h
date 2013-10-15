@@ -27,22 +27,24 @@
 #define kActionSheetAnimationDuration   0.25
 
 #define kActionSheetBounce         10
-#define kActionSheetBorder         10
-#define kActionSheetButtonHeight   45
+#define kActionSheetButtonHeight   36
 #define kActionSheetTopMargin      15
+#define kActionSheetBorderHorizontal  13
+#define kActionSheetBorderVertical    5
 
 #define kActionSheetTitleFont           [UIFont systemFontOfSize:18]
-#define kActionSheetTitleTextColor      [UIColor whiteColor]
+#define kActionSheetTitleTextColor      [UIColor grayColor]
 #define kActionSheetTitleShadowColor    [UIColor blackColor]
-#define kActionSheetTitleShadowOffset   CGSizeMake(0, -1)
+#define kActionSheetTitleShadowOffset   CGSizeMake(0, 0)
 
-#define kActionSheetButtonFont          [UIFont boldSystemFontOfSize:20]
-#define kActionSheetButtonTextColor     [UIColor whiteColor]
-#define kActionSheetButtonShadowColor   [UIColor blackColor]
-#define kActionSheetButtonShadowOffset  CGSizeMake(0, -1)
+#define kActionSheetButtonFont          [UIFont systemFontOfSize:20]
+#define kActionSheetButtonTextColor     [UIColor blueColor]
+#define kActionSheetButtonShadowColor   [UIColor whiteColor]
+#define kActionSheetButtonShadowOffset  CGSizeMake(0, 0)
 
-#define kActionSheetBackground              @"action-sheet-panel.png"
-#define kActionSheetBackgroundCapHeight     30
+#define kActionSheetBackground              @"action-sheet-panel"
+#define kActionSheetBackgroundCapHeight     5
+#define kActionSheetBackgroundCapWidth      5
 
 
 // Alert View constants

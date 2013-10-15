@@ -23,7 +23,7 @@ static UIFont *buttonFont = nil;
     if (self == [BlockActionSheet class])
     {
         background = [UIImage imageNamed:kActionSheetBackground];
-        background = [[background stretchableImageWithLeftCapWidth:0 topCapHeight:kActionSheetBackgroundCapHeight] retain];
+        background = [[background stretchableImageWithLeftCapWidth:kActionSheetBackgroundCapWidth topCapHeight:kActionSheetBackgroundCapHeight] retain];
         titleFont = [kActionSheetTitleFont retain];
         buttonFont = [kActionSheetButtonFont retain];
     }
@@ -51,10 +51,10 @@ static UIFont *buttonFont = nil;
         if (title)
         {
             CGSize size = [title sizeWithFont:titleFont
-                            constrainedToSize:CGSizeMake(frame.size.width-kActionSheetBorder*2, 1000)
+                            constrainedToSize:CGSizeMake(frame.size.width-kActionSheetBorderHorizontal*2, 1000)
                                 lineBreakMode:NSLineBreakByWordWrapping];
             
-            UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kActionSheetBorder, _height, frame.size.width-kActionSheetBorder*2, size.height)];
+            UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kActionSheetBorderHorizontal, _height, frame.size.width-kActionSheetBorderHorizontal*2, size.height)];
             labelView.font = titleFont;
             labelView.numberOfLines = 0;
             labelView.lineBreakMode = NSLineBreakByWordWrapping;
@@ -90,7 +90,7 @@ static UIFont *buttonFont = nil;
     return _blocks.count;
 }
 
-- (void)addButtonWithTitle:(NSString *)title color:(NSString*)color block:(void (^)())block atIndex:(NSInteger)index
+- (void)addButtonWithTitle:(NSString *)title color:(UIColor *)color block:(void (^)())block atIndex:(NSInteger)index
 {
     if (index >= 0)
     {
@@ -113,32 +113,32 @@ static UIFont *buttonFont = nil;
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"red" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:[UIColor redColor] block:block atIndex:-1];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"black" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:-1];
 }
 
 - (void)addButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:@"gray" block:block atIndex:-1];
+    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:-1];
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"red" block:block atIndex:index];
+    [self addButtonWithTitle:title color:[UIColor redColor] block:block atIndex:index];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"black" block:block atIndex:index];
+    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:index];
 }
 
 - (void)addButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:@"gray" block:block atIndex:index];
+    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:index];
 }
 
 - (void)showInView:(UIView *)view
@@ -146,16 +146,20 @@ static UIFont *buttonFont = nil;
     NSUInteger i = 1;
     for (NSArray *block in _blocks)
     {
+        // Separator
+        if (_height > kActionSheetTopMargin) {
+            UIImage *separatorImage = [[UIImage imageNamed:@"alert-action-separator-horizontal"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+            UIImageView *separatorImageView = [[UIImageView alloc] initWithImage:separatorImage];
+            separatorImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            separatorImageView.frame = CGRectMake(kActionSheetBorderHorizontal, _height, _view.bounds.size.width - kActionSheetBorderHorizontal * 2, 1);
+            [_view addSubview:separatorImageView];
+        }
+        
         NSString *title = [block objectAtIndex:1];
-        NSString *color = [block objectAtIndex:2];
-        
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"action-%@-button.png", color]];
-        image = [image stretchableImageWithLeftCapWidth:(int)(image.size.width)>>1 topCapHeight:0];
-        
-        UIImage *highlightedImage = [UIImage imageNamed:[NSString stringWithFormat:@"action-%@-button-highlighted.png", color]];
+        UIColor *color = [block objectAtIndex:2];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(kActionSheetBorder, _height, _view.bounds.size.width-kActionSheetBorder*2, kActionSheetButtonHeight);
+        button.frame = CGRectMake(kActionSheetBorderHorizontal, _height, _view.bounds.size.width-kActionSheetBorderHorizontal*2, kActionSheetButtonHeight);
         button.titleLabel.font = buttonFont;
         if (IOS_LESS_THAN_6) {
 #pragma clan diagnostic push
@@ -172,12 +176,11 @@ static UIFont *buttonFont = nil;
         button.backgroundColor = [UIColor clearColor];
         button.tag = i++;
         
-        [button setBackgroundImage:image forState:UIControlStateNormal];
-        if (highlightedImage)
-        {
-            [button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+        if (color) {
+            [button setTitleColor:color forState:UIControlStateNormal];
+        } else {
+            [button setTitleColor:kActionSheetButtonTextColor forState:UIControlStateNormal];
         }
-        [button setTitleColor:kActionSheetButtonTextColor forState:UIControlStateNormal];
         [button setTitleShadowColor:kActionSheetButtonShadowColor forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateNormal];
         button.accessibilityLabel = title;
@@ -187,7 +190,7 @@ static UIFont *buttonFont = nil;
         button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         [_view addSubview:button];
-        _height += kActionSheetButtonHeight + kActionSheetBorder;
+        _height += kActionSheetButtonHeight + kActionSheetBorderVertical;
     }
     
     UIImageView *modalBackground = [[UIImageView alloc] initWithFrame:_view.bounds];
@@ -200,8 +203,10 @@ static UIFont *buttonFont = nil;
     [BlockBackground sharedInstance].vignetteBackground = _vignetteBackground;
     [[BlockBackground sharedInstance] addToMainWindow:_view];
     CGRect frame = _view.frame;
-    frame.origin.y = [BlockBackground sharedInstance].bounds.size.height;
-    frame.size.height = _height + kActionSheetBounce;
+    frame.origin.x += 8;
+    frame.origin.y = [BlockBackground sharedInstance].bounds.size.height - 8;
+    frame.size.width -= 16;
+    frame.size.height = _height;
     _view.frame = frame;
     
     __block CGPoint center = _view.center;
