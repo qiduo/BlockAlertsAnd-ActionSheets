@@ -11,7 +11,6 @@
 
 @synthesize view = _view;
 @synthesize vignetteBackground = _vignetteBackground;
-@synthesize animationDuration = _animationDuration;
 
 static UIImage *background = nil;
 static UIFont *titleFont = nil;
@@ -48,7 +47,6 @@ static UIFont *buttonFont = nil;
         
         _blocks = [[NSMutableArray alloc] init];
         _height = kActionSheetTopMargin;
-        _animationDuration = 0.25;
 
         if (title)
         {
@@ -209,7 +207,7 @@ static UIFont *buttonFont = nil;
     __block CGPoint center = _view.center;
     center.y -= _height + kActionSheetBounce;
     
-    [UIView animateWithDuration:_animationDuration
+    [UIView animateWithDuration:kActionSheetAnimationDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
@@ -243,7 +241,7 @@ static UIFont *buttonFont = nil;
     {
         CGPoint center = _view.center;
         center.y += _view.bounds.size.height;
-        [UIView animateWithDuration:_animationDuration
+        [UIView animateWithDuration:kActionSheetAnimationDuration
                               delay:0.0
                             options:UIViewAnimationOptionCurveEaseIn
                          animations:^{

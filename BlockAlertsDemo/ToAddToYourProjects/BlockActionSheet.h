@@ -17,7 +17,6 @@
 
 @property (nonatomic, readonly) UIView *view;
 @property (nonatomic, readwrite) BOOL vignetteBackground;
-@property (nonatomic, assign) CGFloat animationDuration;
 
 + (id)sheetWithTitle:(NSString *)title;
 

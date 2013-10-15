@@ -24,6 +24,8 @@
 
 // Action Sheet constants
 
+#define kActionSheetAnimationDuration   0.25
+
 #define kActionSheetBounce         10
 #define kActionSheetBorder         10
 #define kActionSheetButtonHeight   45
@@ -45,28 +47,30 @@
 
 // Alert View constants
 
+#define kAlertViewBackgroundWidth   230
+
 #define kAlertViewBounce         20
 #define kAlertViewBorder         (NeedsLandscapePhoneTweaks ? 5 : 10)
 #define kAlertButtonHeight       (NeedsLandscapePhoneTweaks ? 35 : 44)
 
+#define kAlertViewTitleFont             [UIFont boldSystemFontOfSize:16]
+#define kAlertViewTitleTextColor        [UIColor blackColor]
+#define kAlertViewTitleShadowColor      [UIColor whiteColor]
+#define kAlertViewTitleShadowOffset     CGSizeMake(0, 0)
 
-#define kAlertViewTitleFont             [UIFont boldSystemFontOfSize:20]
-#define kAlertViewTitleTextColor        [UIColor colorWithWhite:244.0/255.0 alpha:1.0]
-#define kAlertViewTitleShadowColor      [UIColor blackColor]
-#define kAlertViewTitleShadowOffset     CGSizeMake(0, -1)
+#define kAlertViewMessageFont           [UIFont systemFontOfSize:14]
+#define kAlertViewMessageTextColor      [UIColor blackColor]
+#define kAlertViewMessageShadowColor    [UIColor whiteColor]
+#define kAlertViewMessageShadowOffset   CGSizeMake(0, 0)
 
-#define kAlertViewMessageFont           [UIFont systemFontOfSize:18]
-#define kAlertViewMessageTextColor      [UIColor colorWithWhite:244.0/255.0 alpha:1.0]
-#define kAlertViewMessageShadowColor    [UIColor blackColor]
-#define kAlertViewMessageShadowOffset   CGSizeMake(0, -1)
+#define kAlertViewButtonFont            [UIFont boldSystemFontOfSize:16]
+#define kAlertViewButtonTextColor       [UIColor blackColor]
+#define kAlertViewButtonShadowColor     [UIColor whiteColor]
+#define kAlertViewButtonShadowOffset    CGSizeMake(0, 0)
 
-#define kAlertViewButtonFont            [UIFont boldSystemFontOfSize:18]
-#define kAlertViewButtonTextColor       [UIColor whiteColor]
-#define kAlertViewButtonShadowColor     [UIColor blackColor]
-#define kAlertViewButtonShadowOffset    CGSizeMake(0, -1)
-
-#define kAlertViewBackground            @"alert-window.png"
-#define kAlertViewBackgroundLandscape   @"alert-window-landscape.png"
-#define kAlertViewBackgroundCapHeight   38
+#define kAlertViewBackground            @"alert-window"
+#define kAlertViewBackgroundLandscape   @"alert-window"
+#define kAlertViewBackgroundCapHeight   5
+#define kAlertViewBackgroundCapWidth    5
 
 #endif

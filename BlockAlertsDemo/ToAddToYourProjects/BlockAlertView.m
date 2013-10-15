@@ -27,10 +27,10 @@ static UIFont *buttonFont = nil;
     if (self == [BlockAlertView class])
     {
         background = [UIImage imageNamed:kAlertViewBackground];
-        background = [[background stretchableImageWithLeftCapWidth:0 topCapHeight:kAlertViewBackgroundCapHeight] retain];
+        background = [[background stretchableImageWithLeftCapWidth:kAlertViewBackgroundCapWidth topCapHeight:kAlertViewBackgroundCapHeight] retain];
         
         backgroundlandscape = [UIImage imageNamed:kAlertViewBackgroundLandscape];
-        backgroundlandscape = [[backgroundlandscape stretchableImageWithLeftCapWidth:0 topCapHeight:kAlertViewBackgroundCapHeight] retain];
+        backgroundlandscape = [[backgroundlandscape stretchableImageWithLeftCapWidth:kAlertViewBackgroundCapWidth topCapHeight:kAlertViewBackgroundCapHeight] retain];
         
         titleFont = [kAlertViewTitleFont retain];
         messageFont = [kAlertViewMessageFont retain];
@@ -116,8 +116,8 @@ static UIFont *buttonFont = nil;
     
     UIWindow *parentView = [BlockBackground sharedInstance];
     CGRect frame = parentView.bounds;
-    frame.origin.x = floorf((frame.size.width - background.size.width) * 0.5);
-    frame.size.width = background.size.width;
+    frame.origin.x = floorf((frame.size.width - kAlertViewBackgroundWidth) * 0.5);
+    frame.size.width = kAlertViewBackgroundWidth;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (UIInterfaceOrientationIsLandscape(orientation)) {
@@ -181,7 +181,7 @@ static UIFont *buttonFont = nil;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Public
 
-- (void)addButtonWithTitle:(NSString *)title color:(NSString*)color block:(void (^)())block 
+- (void)addButtonWithTitle:(NSString *)title color:(UIColor *)color block:(void (^)())block
 {
     [_blocks addObject:[NSArray arrayWithObjects:
                         block ? [[block copy] autorelease] : [NSNull null],
@@ -192,21 +192,17 @@ static UIFont *buttonFont = nil;
 
 - (void)addButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:@"gray" block:block];
+    [self addButtonWithTitle:title color:[UIColor blackColor] block:block];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:@"black" block:block];
+    [self addButtonWithTitle:title color:[UIColor blueColor] block:block];
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:@"red" block:block];
-}
-
-- (void)addButtonWithTitle:(NSString *)title imageIdentifier:(NSString*)identifier block:(void (^)())block {
-    [self addButtonWithTitle:title color:identifier block:block];
+    [self addButtonWithTitle:title color:[UIColor redColor] block:block];
 }
 
 - (void)show
@@ -214,19 +210,11 @@ static UIFont *buttonFont = nil;
     _shown = YES;
     
     BOOL isSecondButton = NO;
-    NSUInteger index = 0;
     for (NSUInteger i = 0; i < _blocks.count; i++)
     {
         NSArray *block = [_blocks objectAtIndex:i];
         NSString *title = [block objectAtIndex:1];
-        NSString *color = [block objectAtIndex:2];
-
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"alert-%@-button.png", color]];
-        image = [image stretchableImageWithLeftCapWidth:(int)(image.size.width+1)>>1 topCapHeight:0];
-        
-        UIImage *highlightedImage = [UIImage imageNamed:[NSString stringWithFormat:@"alert-%@-button-highlighted.png", color]];
-        
-        highlightedImage = [highlightedImage stretchableImageWithLeftCapWidth:(int)(highlightedImage.size.width+1)>>1 topCapHeight:0];
+        UIColor *color = [block objectAtIndex:2];
         
         CGFloat maxHalfWidth = floorf((_view.bounds.size.width-kAlertViewBorder*3)*0.5);
         CGFloat width = _view.bounds.size.width-kAlertViewBorder*2;
@@ -302,12 +290,11 @@ static UIFont *buttonFont = nil;
         button.backgroundColor = [UIColor clearColor];
         button.tag = i+1;
         
-        [button setBackgroundImage:image forState:UIControlStateNormal];
-        if (highlightedImage)
-        {
-            [button setBackgroundImage:highlightedImage forState:UIControlStateHighlighted];
+        UIColor *titleColor = color;
+        if (titleColor == nil) {
+            titleColor = kAlertViewButtonTextColor;
         }
-        [button setTitleColor:kAlertViewButtonTextColor forState:UIControlStateNormal];
+        [button setTitleColor:titleColor forState:UIControlStateNormal];
         [button setTitleShadowColor:kAlertViewButtonShadowColor forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateNormal];
         button.accessibilityLabel = title;
@@ -316,10 +303,19 @@ static UIFont *buttonFont = nil;
         
         [_view addSubview:button];
         
-        if (!isSecondButton)
+        if (!isSecondButton) {
+            UIImage *separatorImage = [[UIImage imageNamed:@"alert-action-separator-horizontal"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+            UIImageView *separatorImageView = [[UIImageView alloc] initWithImage:separatorImage];
+            separatorImageView.frame = CGRectMake(kAlertViewBorder, _height, _view.bounds.size.width - kAlertViewBorder * 2, 1);
+            [_view addSubview:separatorImageView];
+            
             _height += kAlertButtonHeight + kAlertViewBorder;
-        
-        index++;
+        } else {
+            UIImage *separatorImage = [[UIImage imageNamed:@"alert-action-separator-vertical"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+            UIImageView *separatorImageView = [[UIImageView alloc] initWithImage:separatorImage];
+            separatorImageView.frame = CGRectMake(roundf(_view.bounds.size.width / 2.0f), _height, 1, kAlertButtonHeight);
+            [_view addSubview:separatorImageView];
+        }
     }
 
     //_height += 10;  // Margin for the shadow // not sure where this came from, but it's making things look strange (I don't see a shadow, either)
