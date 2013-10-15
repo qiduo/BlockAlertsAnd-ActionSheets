@@ -27,10 +27,10 @@
 #define kActionSheetAnimationDuration   0.25
 
 #define kActionSheetBounce         10
-#define kActionSheetButtonHeight   36
+#define kActionSheetButtonHeight   40
 #define kActionSheetTopMargin      15
 #define kActionSheetBorderHorizontal  13
-#define kActionSheetBorderVertical    5
+#define kActionSheetBorderVertical    4
 
 #define kActionSheetTitleFont           [UIFont systemFontOfSize:18]
 #define kActionSheetTitleTextColor      [UIColor grayColor]
@@ -52,8 +52,9 @@
 #define kAlertViewBackgroundWidth   230
 
 #define kAlertViewBounce         20
-#define kAlertViewBorder         (NeedsLandscapePhoneTweaks ? 5 : 10)
 #define kAlertButtonHeight       (NeedsLandscapePhoneTweaks ? 35 : 44)
+#define kAlertViewBorderHorizontal         (NeedsLandscapePhoneTweaks ? 5 : 10)
+#define kAlertViewBorderVertical            4
 
 #define kAlertViewTitleFont             [UIFont boldSystemFontOfSize:16]
 #define kAlertViewTitleTextColor        [UIColor blackColor]

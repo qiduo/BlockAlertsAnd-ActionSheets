@@ -66,10 +66,10 @@ static UIFont *buttonFont = nil;
     if (_title)
     {
         CGSize size = [_title sizeWithFont:titleFont
-                         constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorder*2, 1000)
+                         constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
                              lineBreakMode:NSLineBreakByWordWrapping];
         
-        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorder, _height, frame.size.width-kAlertViewBorder*2, size.height)];
+        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height)];
         labelView.font = titleFont;
         labelView.numberOfLines = 0;
         labelView.lineBreakMode = NSLineBreakByWordWrapping;
@@ -82,16 +82,16 @@ static UIFont *buttonFont = nil;
         [_view addSubview:labelView];
         [labelView release];
         
-        _height += size.height + kAlertViewBorder;
+        _height += size.height + kAlertViewBorderVertical;
     }
     
     if (_message)
     {
         CGSize size = [_message sizeWithFont:messageFont
-                           constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorder*2, 1000)
+                           constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
                                lineBreakMode:NSLineBreakByWordWrapping];
         
-        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorder, _height, frame.size.width-kAlertViewBorder*2, size.height)];
+        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height)];
         labelView.font = messageFont;
         labelView.numberOfLines = 0;
         labelView.lineBreakMode = NSLineBreakByWordWrapping;
@@ -104,7 +104,7 @@ static UIFont *buttonFont = nil;
         [_view addSubview:labelView];
         [labelView release];
         
-        _height += size.height + kAlertViewBorder;
+        _height += size.height + kAlertViewBorderVertical;
     }
 }
 
@@ -127,7 +127,7 @@ static UIFont *buttonFont = nil;
     
     _view.frame = frame;
     
-    _height = kAlertViewBorder + 15;
+    _height = kAlertViewBorderVertical + 15;
     
     if (NeedsLandscapePhoneTweaks) {
         _height -= 15; // landscape phones need to trimmed a bit
@@ -216,13 +216,13 @@ static UIFont *buttonFont = nil;
         NSString *title = [block objectAtIndex:1];
         UIColor *color = [block objectAtIndex:2];
         
-        CGFloat maxHalfWidth = floorf((_view.bounds.size.width-kAlertViewBorder*3)*0.5);
-        CGFloat width = _view.bounds.size.width-kAlertViewBorder*2;
-        CGFloat xOffset = kAlertViewBorder;
+        CGFloat maxHalfWidth = floorf((_view.bounds.size.width-kAlertViewBorderHorizontal*3)*0.5);
+        CGFloat width = _view.bounds.size.width-kAlertViewBorderHorizontal*2;
+        CGFloat xOffset = kAlertViewBorderHorizontal;
         if (isSecondButton)
         {
             width = maxHalfWidth;
-            xOffset = width + kAlertViewBorder * 2;
+            xOffset = width + kAlertViewBorderHorizontal * 2;
             isSecondButton = NO;
         }
         else if (i + 1 < _blocks.count)
@@ -232,10 +232,10 @@ static UIFont *buttonFont = nil;
             CGSize size = [title sizeWithFont:buttonFont 
                                   minFontSize:10 
                                actualFontSize:nil
-                                     forWidth:_view.bounds.size.width-kAlertViewBorder*2 
+                                     forWidth:_view.bounds.size.width-kAlertViewBorderHorizontal*2
                                 lineBreakMode:NSLineBreakByClipping];
             
-            if (size.width < maxHalfWidth - kAlertViewBorder)
+            if (size.width < maxHalfWidth - kAlertViewBorderHorizontal)
             {
                 // It might fit. Check the next Button
                 NSArray *block2 = [_blocks objectAtIndex:i+1];
@@ -243,10 +243,10 @@ static UIFont *buttonFont = nil;
                 size = [title2 sizeWithFont:buttonFont 
                                 minFontSize:10 
                              actualFontSize:nil
-                                   forWidth:_view.bounds.size.width-kAlertViewBorder*2 
+                                   forWidth:_view.bounds.size.width-kAlertViewBorderHorizontal*2
                               lineBreakMode:NSLineBreakByClipping];
                 
-                if (size.width < maxHalfWidth - kAlertViewBorder)
+                if (size.width < maxHalfWidth - kAlertViewBorderHorizontal)
                 {
                     // They'll fit!
                     isSecondButton = YES;  // For the next iteration
@@ -260,13 +260,13 @@ static UIFont *buttonFont = nil;
             CGSize size = [title sizeWithFont:buttonFont
                                   minFontSize:10
                                actualFontSize:nil
-                                     forWidth:_view.bounds.size.width-kAlertViewBorder*2
+                                     forWidth:_view.bounds.size.width-kAlertViewBorderHorizontal*2
                                 lineBreakMode:NSLineBreakByClipping];
             
             size.width = MAX(size.width, 80);
-            if (size.width + 2 * kAlertViewBorder < width)
+            if (size.width + 2 * kAlertViewBorderHorizontal < width)
             {
-                width = size.width + 2 * kAlertViewBorder;
+                width = size.width + 2 * kAlertViewBorderHorizontal;
                 xOffset = floorf((_view.bounds.size.width - width) * 0.5);
             }
         }
@@ -306,10 +306,10 @@ static UIFont *buttonFont = nil;
         if (!isSecondButton) {
             UIImage *separatorImage = [[UIImage imageNamed:@"alert-action-separator-horizontal"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
             UIImageView *separatorImageView = [[UIImageView alloc] initWithImage:separatorImage];
-            separatorImageView.frame = CGRectMake(kAlertViewBorder, _height, _view.bounds.size.width - kAlertViewBorder * 2, 1);
+            separatorImageView.frame = CGRectMake(kAlertViewBorderHorizontal, _height, _view.bounds.size.width - kAlertViewBorderHorizontal * 2, 1);
             [_view addSubview:separatorImageView];
             
-            _height += kAlertButtonHeight + kAlertViewBorder;
+            _height += kAlertButtonHeight + kAlertViewBorderVertical;
         } else {
             UIImage *separatorImage = [[UIImage imageNamed:@"alert-action-separator-vertical"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
             UIImageView *separatorImageView = [[UIImageView alloc] initWithImage:separatorImage];
