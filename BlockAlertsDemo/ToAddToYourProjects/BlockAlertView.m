@@ -192,17 +192,17 @@ static UIFont *buttonFont = nil;
 
 - (void)addButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:[UIColor blackColor] block:block];
+    [self addButtonWithTitle:title color:kAlertViewButtonTextColor block:block];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:[UIColor blueColor] block:block];
+    [self addButtonWithTitle:title color:kAlertViewCancelButtonTextColor block:block];
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:[UIColor redColor] block:block];
+    [self addButtonWithTitle:title color:kAlertViewDestructiveButtonTextColor block:block];
 }
 
 - (void)show

@@ -113,32 +113,32 @@ static UIFont *buttonFont = nil;
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:[UIColor redColor] block:block atIndex:-1];
+    [self addButtonWithTitle:title color:kActionSheetDestructiveButtonTextColor block:block atIndex:-1];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:-1];
+    [self addButtonWithTitle:title color:kActionSheetCancelButtonTextColor block:block atIndex:-1];
 }
 
 - (void)addButtonWithTitle:(NSString *)title block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:-1];
+    [self addButtonWithTitle:title color:kActionSheetButtonTextColor block:block atIndex:-1];
 }
 
 - (void)setDestructiveButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:[UIColor redColor] block:block atIndex:index];
+    [self addButtonWithTitle:title color:kActionSheetDestructiveButtonTextColor block:block atIndex:index];
 }
 
 - (void)setCancelButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block
 {
-    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:index];
+    [self addButtonWithTitle:title color:kActionSheetCancelButtonTextColor block:block atIndex:index];
 }
 
 - (void)addButtonWithTitle:(NSString *)title atIndex:(NSInteger)index block:(void (^)())block 
 {
-    [self addButtonWithTitle:title color:[UIColor blueColor] block:block atIndex:index];
+    [self addButtonWithTitle:title color:kActionSheetButtonTextColor block:block atIndex:index];
 }
 
 - (void)showInView:(UIView *)view
