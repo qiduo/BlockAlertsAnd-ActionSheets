@@ -27,8 +27,8 @@
 #define kActionSheetAnimationDuration   0.25
 
 #define kActionSheetBounce         10
-#define kActionSheetButtonHeight   45
-#define kActionSheetTopMargin      5
+#define kActionSheetButtonHeight   46
+#define kActionSheetTopMargin      0
 #define kActionSheetBorderHorizontal  13
 #define kActionSheetBorderVertical    0
 
@@ -39,8 +39,14 @@
 
 #define kActionSheetButtonFont          [UIFont systemFontOfSize:18]
 #define kActionSheetButtonTextColor     [UIColor colorWithWhite:0.235 alpha:1.0f]
+#define kActionSheetButtonTextColorHighlighted     [UIColor whiteColor]
 #define kActionSheetButtonShadowColor   [UIColor whiteColor]
 #define kActionSheetButtonShadowOffset  CGSizeMake(0, 0)
+
+#define kActionSheetButtonBackgroundHighlightedBoth     @"alert-action-btn-bg-highlighted-both"
+#define kActionSheetButtonBackgroundHighlightedMiddle   @"alert-action-btn-bg-highlighted-middle"
+#define kActionSheetButtonBackgroundHighlightedTop      @"alert-action-btn-bg-highlighted-top"
+#define kActionSheetButtonBackgroundHighlightedBottom   @"alert-action-btn-bg-highlighted-bottom"
 
 #define kActionSheetCancelButtonTextColor           [UIColor colorWithRed:22/255.0f green:116/255.0f blue:229/255.0f alpha:1.0f]
 #define kActionSheetDestructiveButtonTextColor      [UIColor redColor]
@@ -52,14 +58,17 @@
 
 // Alert View constants
 
-#define kAlertViewBackgroundWidth   260
+#define kAlertViewBackgroundWidth   261
 
 #define kAlertViewTopMargin      10
 #define kAlertViewBounce         20
 #define kAlertButtonHeight       (NeedsLandscapePhoneTweaks ? 32 : 42)
 #define kAlertViewBorderHorizontal          (NeedsLandscapePhoneTweaks ? 4 : 8)
-#define kAlertViewBorderVertical            6
-#define kAlertViewMessageBottomMargin       20
+#define kAlertViewBorderVertical            0
+
+#define kAlertViewButtonPartTopMargin       18
+#define kAlertViewMessageBottomMargin       8
+#define kAlertViewTitleBottomMargin         8
 
 #define kAlertViewTitleFont             [UIFont boldSystemFontOfSize:18]
 #define kAlertViewTitleTextColor        [UIColor colorWithWhite:0.235 alpha:1.0f]
@@ -73,8 +82,14 @@
 
 #define kAlertViewButtonFont            [UIFont boldSystemFontOfSize:16]
 #define kAlertViewButtonTextColor       [UIColor colorWithWhite:0.235 alpha:1.0f]
+#define kAlertViewButtonTextColorHighlighted      [UIColor whiteColor]
 #define kAlertViewButtonShadowColor     [UIColor whiteColor]
 #define kAlertViewButtonShadowOffset    CGSizeMake(0, 0)
+
+#define kAlertViewButtonBackgroundHighlightedMiddle         @"alert-action-btn-bg-highlighted-middle"
+#define kAlertViewButtonBackgroundHighlightedBottom         @"alert-action-btn-bg-highlighted-bottom"
+#define kAlertViewButtonBackgroundHighlightedBottomLeft     @"alert-action-btn-bg-highlighted-bottom-left"
+#define kAlertViewButtonBackgroundHighlightedBottomRight    @"alert-action-btn-bg-highlighted-bottom-right"
 
 #define kAlertViewCancelButtonTextColor         [UIColor colorWithWhite:0.235 alpha:1.0f]
 #define kAlertViewDestructiveButtonTextColor    [UIColor colorWithRed:22/255.0f green:116/255.0f blue:229/255.0f alpha:1.0f]

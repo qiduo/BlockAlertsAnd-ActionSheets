@@ -143,7 +143,7 @@ static UIFont *buttonFont = nil;
 
 - (void)showInView:(UIView *)view
 {
-    NSUInteger i = 1;
+    NSUInteger i = 1;   // Why?
     for (NSArray *block in _blocks)
     {
         // Separator
@@ -159,7 +159,20 @@ static UIFont *buttonFont = nil;
         UIColor *color = [block objectAtIndex:2];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(kActionSheetBorderHorizontal, _height, _view.bounds.size.width-kActionSheetBorderHorizontal*2, kActionSheetButtonHeight);
+        button.frame = CGRectMake(0, _height, _view.bounds.size.width, kActionSheetButtonHeight);
+        
+        UIImage *backgroundImage;
+        if (_blocks.count == 1) {
+            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBoth] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+        } else if (i == 1) {
+            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedTop] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+        } else if (i == [self buttonCount]) {
+            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBottom] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+        } else {
+            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedMiddle] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
+        }
+        [button setBackgroundImage:backgroundImage forState:UIControlStateHighlighted];
+        
         button.titleLabel.font = buttonFont;
         if (IOS_LESS_THAN_6) {
 #pragma clan diagnostic push
@@ -181,6 +194,7 @@ static UIFont *buttonFont = nil;
         } else {
             [button setTitleColor:kActionSheetButtonTextColor forState:UIControlStateNormal];
         }
+        [button setTitleColor:kActionSheetButtonTextColorHighlighted forState:UIControlStateHighlighted];
         [button setTitleShadowColor:kActionSheetButtonShadowColor forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateNormal];
         button.accessibilityLabel = title;
