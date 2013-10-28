@@ -46,7 +46,7 @@ static UIFont *buttonFont = nil;
 + (void)showInfoAlertWithTitle:(NSString *)title message:(NSString *)message
 {
     BlockAlertView *alert = [[BlockAlertView alloc] initWithTitle:title message:message];
-    [alert setCancelButtonWithTitle:NSLocalizedString(@"Dismiss", nil) block:nil];
+    [alert setDestructiveButtonWithTitle:NSLocalizedString(@"OK", nil) block:nil];
     [alert show];
     [alert release];
 }
@@ -54,7 +54,7 @@ static UIFont *buttonFont = nil;
 + (void)showErrorAlert:(NSError *)error
 {
     BlockAlertView *alert = [[BlockAlertView alloc] initWithTitle:NSLocalizedString(@"Operation Failed", nil) message:[NSString stringWithFormat:NSLocalizedString(@"The operation did not complete successfully: %@", nil), error]];
-    [alert setCancelButtonWithTitle:@"Dismiss" block:nil];
+    [alert setDestructiveButtonWithTitle:NSLocalizedString(@"OK", nil) block:nil];
     [alert show];
     [alert release];
 }
@@ -134,7 +134,7 @@ static UIFont *buttonFont = nil;
     _height = kAlertViewBorderVertical + kAlertViewTopMargin;
     
     if (NeedsLandscapePhoneTweaks) {
-        _height -= kAlertViewTopMargin; // landscape phones need to trimmed a bit
+        _height -= roundf(kAlertViewTopMargin * 0.5); // landscape phones need to trimmed a bit
     }
 
     [self addComponents:frame];
