@@ -26,16 +26,17 @@
 
 #define kActionSheetAnimationDuration   0.25
 
-#define kActionSheetBounce         10
-#define kActionSheetButtonHeight   46
-#define kActionSheetTopMargin      0
-#define kActionSheetBorderHorizontal  13
-#define kActionSheetBorderVertical    0
+#define kActionSheetBounce              10
+#define kActionSheetButtonHeight        46
+#define kActionSheetTopMargin           0
+#define kActionSheetBorderHorizontal    13
+#define kActionSheetBorderVertical      0
 
-#define kActionSheetTitleFont           [UIFont systemFontOfSize:18]
-#define kActionSheetTitleTextColor      [UIColor grayColor]
-#define kActionSheetTitleShadowColor    [UIColor grayColor]
-#define kActionSheetTitleShadowOffset   CGSizeMake(0, 0)
+#define kActionSheetTitleVerticalMargin     14
+#define kActionSheetTitleFont               [UIFont systemFontOfSize:16]
+#define kActionSheetTitleTextColor          [UIColor grayColor]
+#define kActionSheetTitleShadowColor        [UIColor grayColor]
+#define kActionSheetTitleShadowOffset       CGSizeMake(0, 0)
 
 #define kActionSheetButtonFont          [UIFont systemFontOfSize:18]
 #define kActionSheetButtonTextColor     [UIColor colorWithWhite:0.235 alpha:1.0f]

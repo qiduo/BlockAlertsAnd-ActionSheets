@@ -7,6 +7,10 @@
 #import "BlockBackground.h"
 #import "BlockUI.h"
 
+@interface BlockActionSheet ()
+@property (nonatomic, assign) BOOL hasTitle;
+@end
+
 @implementation BlockActionSheet
 
 @synthesize view = _view;
@@ -48,13 +52,12 @@ static UIFont *buttonFont = nil;
         _blocks = [[NSMutableArray alloc] init];
         _height = kActionSheetTopMargin;
 
-        if (title)
-        {
+        if (title) {
             CGSize size = [title sizeWithFont:titleFont
                             constrainedToSize:CGSizeMake(frame.size.width-kActionSheetBorderHorizontal*2, 1000)
                                 lineBreakMode:NSLineBreakByWordWrapping];
             
-            UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kActionSheetBorderHorizontal, _height, frame.size.width-kActionSheetBorderHorizontal*2, size.height)];
+            UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kActionSheetBorderHorizontal, _height + kActionSheetTitleVerticalMargin, frame.size.width-kActionSheetBorderHorizontal*2, size.height)];
             labelView.font = titleFont;
             labelView.numberOfLines = 0;
             labelView.lineBreakMode = NSLineBreakByWordWrapping;
@@ -70,7 +73,10 @@ static UIFont *buttonFont = nil;
             [_view addSubview:labelView];
             [labelView release];
             
-            _height += size.height + 5;
+            _height += size.height + kActionSheetTitleVerticalMargin * 2;
+            _hasTitle = YES;
+        } else {
+            _hasTitle = NO;
         }
         _vignetteBackground = NO;
     }
@@ -163,9 +169,17 @@ static UIFont *buttonFont = nil;
         
         UIImage *backgroundImage;
         if (_blocks.count == 1) {
-            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBoth] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            if (self.hasTitle) {
+                backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBottom] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            } else {
+                backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBoth] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            }
         } else if (i == 1) {
-            backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedTop] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            if (self.hasTitle) {
+                backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedMiddle] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
+            } else {
+                backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedTop] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            }
         } else if (i == [self buttonCount]) {
             backgroundImage = [[UIImage imageNamed:kActionSheetButtonBackgroundHighlightedBottom] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
         } else {
