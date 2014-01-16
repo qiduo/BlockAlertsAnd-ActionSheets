@@ -43,6 +43,9 @@ static UIFont *buttonFont = nil;
     if ((self = [super init]))
     {
         UIWindow *parentView = [BlockBackground sharedInstance];
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundClicked:)];
+        [parentView addGestureRecognizer:tapGestureRecognizer];
+
         CGRect frame = parentView.bounds;
         
         _view = [[UIView alloc] initWithFrame:frame];
@@ -302,5 +305,12 @@ static UIFont *buttonFont = nil;
     int buttonIndex = [(UIButton *)sender tag] - 1;
     [self dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
+
+
+- (void)backgroundClicked:(id)sender
+{
+    [self dismissWithClickedButtonIndex:-1 animated:YES];
+}
+
 
 @end
