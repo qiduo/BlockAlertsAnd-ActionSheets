@@ -9,6 +9,7 @@
 
 @interface BlockActionSheet ()
 @property (nonatomic, assign) BOOL hasTitle;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
 
 @implementation BlockActionSheet
@@ -38,14 +39,28 @@ static UIFont *buttonFont = nil;
     return [[[BlockActionSheet alloc] initWithTitle:title] autorelease];
 }
 
-- (id)initWithTitle:(NSString *)title 
+
+- (void)setBackgroundTriggersCancel:(BOOL)backgroundTriggersCancel {
+    _backgroundTriggersCancel = backgroundTriggersCancel;
+    if (!self.tapGestureRecognizer) {
+        _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundClicked:)];
+    }
+    
+    UIWindow *parentView = [BlockBackground sharedInstance];
+
+    if (backgroundTriggersCancel) {
+        [parentView addGestureRecognizer:_tapGestureRecognizer];
+    } else {
+        [parentView removeGestureRecognizer:_tapGestureRecognizer];
+    }
+}
+
+
+- (id)initWithTitle:(NSString *)title
 {
     if ((self = [super init]))
     {
         UIWindow *parentView = [BlockBackground sharedInstance];
-        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundClicked:)];
-        [parentView addGestureRecognizer:tapGestureRecognizer];
-
         CGRect frame = parentView.bounds;
         
         _view = [[UIView alloc] initWithFrame:frame];
@@ -54,6 +69,8 @@ static UIFont *buttonFont = nil;
         
         _blocks = [[NSMutableArray alloc] init];
         _height = kActionSheetTopMargin;
+        
+        self.backgroundTriggersCancel = YES;
 
         if (title) {
             CGSize size = [title sizeWithFont:titleFont
