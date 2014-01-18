@@ -87,6 +87,9 @@ static UIFont *buttonFont = nil;
     
     if (_message)
     {
+        if (!_title) {
+            _height += 4.0f;
+        }
         CGSize size = [_message sizeWithFont:messageFont
                            constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
                                lineBreakMode:NSLineBreakByWordWrapping];

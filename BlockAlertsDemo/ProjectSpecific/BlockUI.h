@@ -61,22 +61,22 @@
 
 #define kAlertViewBackgroundWidth   261
 
-#define kAlertViewTopMargin      10
+#define kAlertViewTopMargin      18
 #define kAlertViewBounce         20
 #define kAlertButtonHeight       (NeedsLandscapePhoneTweaks ? 32 : 42)
 #define kAlertViewBorderHorizontal          (NeedsLandscapePhoneTweaks ? 4 : 8)
 #define kAlertViewBorderVertical            0
 
-#define kAlertViewButtonPartTopMargin       18
+#define kAlertViewButtonPartTopMargin       12
 #define kAlertViewMessageBottomMargin       8
-#define kAlertViewTitleBottomMargin         8
+#define kAlertViewTitleBottomMargin         6
 
 #define kAlertViewTitleFont             [UIFont boldSystemFontOfSize:18]
 #define kAlertViewTitleTextColor        [UIColor colorWithWhite:0.235 alpha:1.0f]
 #define kAlertViewTitleShadowColor      [UIColor whiteColor]
 #define kAlertViewTitleShadowOffset     CGSizeMake(0, 0)
 
-#define kAlertViewMessageFont           [UIFont systemFontOfSize:14]
+#define kAlertViewMessageFont           [UIFont systemFontOfSize:15]
 #define kAlertViewMessageTextColor      [UIColor colorWithWhite:0.235 alpha:1.0f]
 #define kAlertViewMessageShadowColor    [UIColor whiteColor]
 #define kAlertViewMessageShadowOffset   CGSizeMake(0, 0)
