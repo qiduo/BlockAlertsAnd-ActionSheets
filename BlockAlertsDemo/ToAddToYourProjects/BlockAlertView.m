@@ -63,7 +63,7 @@ static UIFont *buttonFont = nil;
 #pragma mark - NSObject
 
 - (void)addComponents:(CGRect)frame {
-    if (_title)
+    if (_title || !_title.length)
     {
         CGSize size = [_title sizeWithFont:titleFont
                          constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
@@ -87,7 +87,7 @@ static UIFont *buttonFont = nil;
     
     if (_message)
     {
-        if (!_title) {
+        if (!_title || !_title.length) {
             _height += 4.0f;
         }
         CGSize size = [_message sizeWithFont:messageFont
