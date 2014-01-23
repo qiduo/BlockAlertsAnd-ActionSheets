@@ -7,7 +7,7 @@
 #import "BlockBackground.h"
 #import "BlockUI.h"
 
-@interface BlockActionSheet ()
+@interface BlockActionSheet () <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) BOOL hasTitle;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
@@ -44,6 +44,7 @@ static UIFont *buttonFont = nil;
     _backgroundTriggersCancel = backgroundTriggersCancel;
     if (!self.tapGestureRecognizer) {
         _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundClicked:)];
+        _tapGestureRecognizer.delegate = self;
     }
     
     UIWindow *parentView = [BlockBackground sharedInstance];
@@ -108,6 +109,12 @@ static UIFont *buttonFont = nil;
 {
     [_view release];
     [_blocks release];
+    
+    // remove self.tapgesture from overlay window.
+    UIWindow *parentView = [BlockBackground sharedInstance];
+    [parentView removeGestureRecognizer:_tapGestureRecognizer];
+    [_tapGestureRecognizer release];
+
     [super dealloc];
 }
 
@@ -314,6 +321,7 @@ static UIFont *buttonFont = nil;
     }
 }
 
+
 #pragma mark - Action
 
 - (void)buttonClicked:(id)sender 
@@ -327,6 +335,21 @@ static UIFont *buttonFont = nil;
 - (void)backgroundClicked:(id)sender
 {
     [self dismissWithClickedButtonIndex:-1 animated:YES];
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+        CGPoint location = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+        if (self.view && CGRectContainsPoint(self.view.frame, location)) {
+            return NO;
+        }
+        return YES;
+    }
+    return NO;
 }
 
 
