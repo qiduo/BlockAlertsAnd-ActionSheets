@@ -7,8 +7,9 @@
 #import "BlockBackground.h"
 #import "BlockUI.h"
 
-@interface BlockActionSheet ()
+@interface BlockActionSheet () <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) BOOL hasTitle;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
 
 @implementation BlockActionSheet
@@ -38,7 +39,25 @@ static UIFont *buttonFont = nil;
     return [[[BlockActionSheet alloc] initWithTitle:title] autorelease];
 }
 
-- (id)initWithTitle:(NSString *)title 
+
+- (void)setBackgroundTriggersCancel:(BOOL)backgroundTriggersCancel {
+    _backgroundTriggersCancel = backgroundTriggersCancel;
+    if (!self.tapGestureRecognizer) {
+        _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundClicked:)];
+        _tapGestureRecognizer.delegate = self;
+    }
+    
+    UIWindow *parentView = [BlockBackground sharedInstance];
+
+    if (backgroundTriggersCancel) {
+        [parentView addGestureRecognizer:_tapGestureRecognizer];
+    } else {
+        [parentView removeGestureRecognizer:_tapGestureRecognizer];
+    }
+}
+
+
+- (id)initWithTitle:(NSString *)title
 {
     if ((self = [super init]))
     {
@@ -51,6 +70,8 @@ static UIFont *buttonFont = nil;
         
         _blocks = [[NSMutableArray alloc] init];
         _height = kActionSheetTopMargin;
+        
+        self.backgroundTriggersCancel = YES;
 
         if (title) {
             CGSize size = [title sizeWithFont:titleFont
@@ -88,6 +109,12 @@ static UIFont *buttonFont = nil;
 {
     [_view release];
     [_blocks release];
+    
+    // remove self.tapgesture from overlay window.
+    UIWindow *parentView = [BlockBackground sharedInstance];
+    [parentView removeGestureRecognizer:_tapGestureRecognizer];
+    [_tapGestureRecognizer release];
+
     [super dealloc];
 }
 
@@ -294,6 +321,7 @@ static UIFont *buttonFont = nil;
     }
 }
 
+
 #pragma mark - Action
 
 - (void)buttonClicked:(id)sender 
@@ -302,5 +330,27 @@ static UIFont *buttonFont = nil;
     int buttonIndex = [(UIButton *)sender tag] - 1;
     [self dismissWithClickedButtonIndex:buttonIndex animated:YES];
 }
+
+
+- (void)backgroundClicked:(id)sender
+{
+    [self dismissWithClickedButtonIndex:-1 animated:YES];
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+        CGPoint location = [gestureRecognizer locationInView:gestureRecognizer.view.superview];
+        if (self.view && CGRectContainsPoint(self.view.frame, location)) {
+            return NO;
+        }
+        return YES;
+    }
+    return NO;
+}
+
 
 @end
