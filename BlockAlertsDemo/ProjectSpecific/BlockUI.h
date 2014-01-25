@@ -49,7 +49,7 @@
 #define kActionSheetButtonBackgroundHighlightedTop      @"alert-action-btn-bg-highlighted-top"
 #define kActionSheetButtonBackgroundHighlightedBottom   @"alert-action-btn-bg-highlighted-bottom"
 
-#define kActionSheetCancelButtonTextColor           [UIColor colorWithRed:22/255.0f green:116/255.0f blue:229/255.0f alpha:1.0f]
+#define kActionSheetCancelButtonTextColor           [UIColor colorWithRed:42/255.0f green:137/255.0f blue:204/255.0f alpha:1.0f]
 #define kActionSheetDestructiveButtonTextColor      [UIColor redColor]
 
 #define kActionSheetBackground              @"action-sheet-panel"
@@ -93,7 +93,7 @@
 #define kAlertViewButtonBackgroundHighlightedBottomRight    @"alert-action-btn-bg-highlighted-bottom-right"
 
 #define kAlertViewCancelButtonTextColor         [UIColor colorWithWhite:0.235 alpha:1.0f]
-#define kAlertViewDestructiveButtonTextColor    [UIColor colorWithRed:22/255.0f green:116/255.0f blue:229/255.0f alpha:1.0f]
+#define kAlertViewDestructiveButtonTextColor    [UIColor colorWithRed:42/255.0f green:137/255.0f blue:204/255.0f alpha:1.0f]
 
 #define kAlertViewBackground            @"alert-window"
 #define kAlertViewBackgroundLandscape   @"alert-window"
