@@ -61,7 +61,7 @@
 
 #define kAlertViewBackgroundWidth   261
 
-#define kAlertViewTopMargin      18
+#define kAlertViewTopMargin      12
 #define kAlertViewBounce         20
 #define kAlertButtonHeight       (NeedsLandscapePhoneTweaks ? 32 : 42)
 #define kAlertViewBorderHorizontal          (NeedsLandscapePhoneTweaks ? 4 : 8)

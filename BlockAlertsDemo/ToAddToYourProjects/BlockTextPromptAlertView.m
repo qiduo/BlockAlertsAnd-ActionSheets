@@ -9,7 +9,7 @@
 #import "BlockTextPromptAlertView.h"
 
 #define kTextBoxHeight      31
-#define kTextBoxSpacing     5
+#define kTextBoxSpacing     12
 #define kTextBoxHorizontalMargin 12
 
 #define kKeyboardResizeBounce         20
