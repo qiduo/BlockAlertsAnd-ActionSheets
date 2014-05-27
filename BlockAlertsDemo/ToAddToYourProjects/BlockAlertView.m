@@ -12,12 +12,51 @@
 @synthesize view = _view;
 @synthesize backgroundImage = _backgroundImage;
 @synthesize vignetteBackground = _vignetteBackground;
+@synthesize titleLabel = _titleLabel;
+@synthesize messageLabel = _messageLabel;
 
 static UIImage *background = nil;
 static UIImage *backgroundlandscape = nil;
 static UIFont *titleFont = nil;
 static UIFont *messageFont = nil;
 static UIFont *buttonFont = nil;
+
+#pragma mark - Accessors
+
+- (UILabel *)titleLabel
+{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _titleLabel.font = titleFont;
+        _titleLabel.numberOfLines = 0;
+        _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _titleLabel.textColor = kAlertViewTitleTextColor;
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.shadowColor = kAlertViewTitleShadowColor;
+        _titleLabel.shadowOffset = kAlertViewTitleShadowOffset;
+        _titleLabel.text = _title;
+    }
+    return _titleLabel;
+}
+
+
+- (UILabel *)messageLabel
+{
+    if (!_messageLabel) {
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _messageLabel.font = messageFont;
+        _messageLabel.numberOfLines = 0;
+        _messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _messageLabel.textColor = kAlertViewMessageTextColor;
+        _messageLabel.backgroundColor = [UIColor clearColor];
+        _messageLabel.textAlignment = NSTextAlignmentCenter;
+        _messageLabel.shadowColor = kAlertViewMessageShadowColor;
+        _messageLabel.shadowOffset = kAlertViewMessageShadowOffset;
+        _messageLabel.text = _message;
+    }
+    return _messageLabel;
+}
 
 
 #pragma mark - init
@@ -69,18 +108,8 @@ static UIFont *buttonFont = nil;
                          constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
                              lineBreakMode:NSLineBreakByWordWrapping];
         
-        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height)];
-        labelView.font = titleFont;
-        labelView.numberOfLines = 0;
-        labelView.lineBreakMode = NSLineBreakByWordWrapping;
-        labelView.textColor = kAlertViewTitleTextColor;
-        labelView.backgroundColor = [UIColor clearColor];
-        labelView.textAlignment = NSTextAlignmentCenter;
-        labelView.shadowColor = kAlertViewTitleShadowColor;
-        labelView.shadowOffset = kAlertViewTitleShadowOffset;
-        labelView.text = _title;
-        [_view addSubview:labelView];
-        [labelView release];
+        self.titleLabel.frame = CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height);
+        [_view addSubview:self.titleLabel];
         
         _height += size.height + kAlertViewTitleBottomMargin;
     }
@@ -94,18 +123,8 @@ static UIFont *buttonFont = nil;
                            constrainedToSize:CGSizeMake(frame.size.width-kAlertViewBorderHorizontal*2, 1000)
                                lineBreakMode:NSLineBreakByWordWrapping];
         
-        UILabel *labelView = [[UILabel alloc] initWithFrame:CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height)];
-        labelView.font = messageFont;
-        labelView.numberOfLines = 0;
-        labelView.lineBreakMode = NSLineBreakByWordWrapping;
-        labelView.textColor = kAlertViewMessageTextColor;
-        labelView.backgroundColor = [UIColor clearColor];
-        labelView.textAlignment = NSTextAlignmentCenter;
-        labelView.shadowColor = kAlertViewMessageShadowColor;
-        labelView.shadowOffset = kAlertViewMessageShadowOffset;
-        labelView.text = _message;
-        [_view addSubview:labelView];
-        [labelView release];
+        self.messageLabel.frame = CGRectMake(kAlertViewBorderHorizontal, _height, frame.size.width-kAlertViewBorderHorizontal*2, size.height);
+        [_view addSubview:self.messageLabel];
         
         _height += size.height + kAlertViewMessageBottomMargin;
     }
@@ -182,6 +201,8 @@ static UIFont *buttonFont = nil;
     [_backgroundImage release];
     [_view release];
     [_blocks release];
+    [_titleLabel release];
+    [_messageLabel release];
     [super dealloc];
 }
 

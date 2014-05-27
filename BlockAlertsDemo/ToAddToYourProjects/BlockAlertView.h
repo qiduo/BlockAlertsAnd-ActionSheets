@@ -38,5 +38,7 @@
 @property (nonatomic, retain) UIImage *backgroundImage;
 @property (nonatomic, readonly) UIView *view;
 @property (nonatomic, readwrite) BOOL vignetteBackground;
+@property (nonatomic, retain, readonly) UILabel *titleLabel;
+@property (nonatomic, retain, readonly) UILabel *messageLabel;
 
 @end
